@@ -27,7 +27,7 @@ export class Parser {
     public variables: DocVariables = {},
     public funcs: DocPredefinedFunctions = {}
   ) {
-    let grammarPath = path.join(__dirname, `grammar.peggy`);
+    let grammarPath = path.join(__dirname, '..', `grammar.peggy`);
     this.parser = peggy.generate(fs.readFileSync(grammarPath, "utf8"));
     this.document = this.parser.parse(this.input);
   }
@@ -134,19 +134,4 @@ export class Parser {
 
     throw new Error(`Unknown block type: ${block.type}`);
   }
-}
-
-export function parse(id: string, vars: any, preserve: boolean = false) {
-  if (preserve) {
-    id = "random";
-  }
-
-  return Parser.instance(id, vars, {
-    async randomInt(from: string, to: string) {
-      return random.integer(+from, +to);
-    },
-    async randomFloat(from: string, to: string) {
-      return random.real(+from, +to);
-    },
-  }).parse();
 }
