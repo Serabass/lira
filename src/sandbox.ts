@@ -10,6 +10,4 @@ import fs from "fs";
 
   let res = await pa.parse();
   console.log(res);
-
-  return;
 })();
