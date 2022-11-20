@@ -2,7 +2,7 @@
   "name": "@serabass/lira",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "preinstall": "npm run build",
