@@ -12,5 +12,6 @@ describe("test", () => {
     let res = await pa.parse();
     expect(res).not.toBeNull();
     expect(typeof res).toBe("string");
+    expect(res.startsWith("Добрый день")).toBeTruthy();
   });
 });
