@@ -12,4 +12,4 @@ import fs from "fs";
   console.log(res);
 
   return;
-})(); 
+})();
