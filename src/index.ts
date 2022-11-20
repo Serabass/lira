@@ -23,13 +23,13 @@ export class Parser {
   private parser: any;
 
   public constructor(
-    public id: string,
-    public variables: DocVariables,
-    public funcs: DocPredefinedFunctions
+    public input: string,
+    public variables: DocVariables = {},
+    public funcs: DocPredefinedFunctions = {}
   ) {
-    let p = path.join("data/grammars", `${id}.go`);
-    this.parser = peggy.generate(fs.readFileSync("grammar2.peggy", "utf8"));
-    this.document = this.parser.parse(fs.readFileSync(p, "utf8"));
+    let grammarPath = path.join(__dirname, `grammar.peggy`);
+    this.parser = peggy.generate(fs.readFileSync(grammarPath, "utf8"));
+    this.document = this.parser.parse(this.input);
   }
 
   public parse() {
@@ -54,10 +54,11 @@ export class Parser {
   public async parseBlock(block: any) {
     switch (block.type) {
       case "Block":
-        return (await Promise.all(
-          block.statements
-            .map((s: any) => this.parseBlockStatement(s, block))
-        )).join("");
+        return (
+          await Promise.all(
+            block.statements.map((s: any) => this.parseBlockStatement(s, block))
+          )
+        ).join("");
 
       case "ArrayBlock":
         let els = await Promise.all(
