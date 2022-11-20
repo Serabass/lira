@@ -8,7 +8,7 @@ function coin() {
 }
 
 type DocVariables = { [name: string]: any };
-type DocPredefinedFunctions = { [name: string]: any };
+type DocPredefinedFunctions = { [name: string]: (...args: string[]) => any };
 
 export class Parser {
   public static instance(

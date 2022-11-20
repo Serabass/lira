@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "s": "tsnd --respawn --clear --transpile-only src/sandbox.ts",
     "preinstall": "npm run build",
     "test:watch": "jest --watchAll"
   },
@@ -21,6 +22,7 @@
     "@types/jest": "^29.2.3",
     "@types/node": "^18.11.9",
     "jest": "^29.3.1",
-    "ts-jest": "^29.0.3"
+    "ts-jest": "^29.0.3",
+    "ts-node-dev": "^2.0.0"
   }
 }
