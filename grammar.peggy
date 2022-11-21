@@ -196,9 +196,9 @@ Text 'text'
       value: chars.join("")
     };
   }
- 
+
 Char 'char'
-  = [^:\[\]{}\|\n<>;#]
+  = [^:\[\]{}\|\r\n<>;#]
 
 Integer
   = [0-9]+ {
@@ -215,7 +215,6 @@ NL 'newline'
   = "\r\n"
   / "\r"
   / "\n"
-  
 
 EOF 'end of file'
   = !.
