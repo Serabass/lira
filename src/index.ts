@@ -24,7 +24,7 @@ export class Parser {
     public variables: DocVariables = {},
     public funcs: DocPredefinedFunctions = {}
   ) {
-    this.parser = require("../grammar.js");
+    this.parser = require("./grammar.js");
     this.document = this.parser.parse(this.input);
   }
 
