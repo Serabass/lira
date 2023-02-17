@@ -2,9 +2,20 @@
 type DocVariables = { [name: string]: any };
 type DocPredefinedFunctions = { [name: string]: (...args: string[]) => any };
 
+export interface IRandom {
+
+  bool(): boolean;
+  
+  integer(min: number, max: number): number;
+
+  pick<T>(source: T[]): T;
+
+  shuffle<T>(source: T[]): T[];
+}
+
 export class Parser {
   public static instance(
-    random: any,
+    random: IRandom,
     input: string,
     variables: DocVariables,
     funcs: DocPredefinedFunctions
@@ -16,7 +27,7 @@ export class Parser {
   private parser: any;
 
   public constructor(
-    public random: any,
+    public random: IRandom,
     public input: string,
     public variables: DocVariables = {},
     public funcs: DocPredefinedFunctions = {}
