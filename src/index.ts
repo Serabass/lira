@@ -1,6 +1,3 @@
-import peggy from "peggy";
-import fs from "fs";
-import path from "path";
 import { random, pick } from "./random";
 
 function coin() {
@@ -27,8 +24,7 @@ export class Parser {
     public variables: DocVariables = {},
     public funcs: DocPredefinedFunctions = {}
   ) {
-    let grammarPath = path.join(__dirname, '..', `grammar.peggy`);
-    this.parser = peggy.generate(fs.readFileSync(grammarPath, "utf8"));
+    this.parser = require("../grammar.js");
     this.document = this.parser.parse(this.input);
   }
 
