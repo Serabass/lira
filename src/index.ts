@@ -1,25 +1,22 @@
-import { random, pick } from "./random";
-
-function coin() {
-  return random.bool();
-}
 
 type DocVariables = { [name: string]: any };
 type DocPredefinedFunctions = { [name: string]: (...args: string[]) => any };
 
 export class Parser {
   public static instance(
-    id: string,
+    random: any,
+    input: string,
     variables: DocVariables,
     funcs: DocPredefinedFunctions
   ) {
-    return new Parser(id, variables, funcs);
+    return new Parser(random, input, variables, funcs);
   }
 
   private document: any;
   private parser: any;
 
   public constructor(
+    public random: any,
     public input: string,
     public variables: DocVariables = {},
     public funcs: DocPredefinedFunctions = {}
@@ -28,6 +25,11 @@ export class Parser {
     this.document = this.parser.parse(this.input);
   }
 
+  public pick<T>(source: T[]): T {
+    let a = this.random.shuffle(source);
+    return this.random.pick(a);
+  }
+  
   public parse() {
     try {
       return this.parseDocument();
@@ -37,7 +39,7 @@ export class Parser {
   }
 
   public async parseDocument() {
-    let el: any = pick(this.document.elements);
+    let el: any = this.pick(this.document.elements);
 
     switch (el.type) {
       case "Block":
@@ -60,7 +62,7 @@ export class Parser {
         let els = await Promise.all(
           block.elements.map((s: any) => this.parseBlock(s))
         );
-        return pick(els);
+        return this.pick(els);
 
       case "Text":
         return block.value;
@@ -75,11 +77,11 @@ export class Parser {
         return block.value;
 
       case "CharList":
-        let count = random.integer(block.count.min, block.count.max);
-        return pick<string>(block.list).repeat(count);
+        let count = this.random.integer(block.count.min, block.count.max);
+        return this.pick<string>(block.list).repeat(count);
 
       case "InlineList":
-        let e = pick<any>(block.value);
+        let e = this.pick<any>(block.value);
 
         if (!e) {
           return "";
@@ -90,7 +92,7 @@ export class Parser {
       case "Variable":
         let varName = block.name.name;
         if (block.optional) {
-          let b = coin();
+          let b = this.random.bool();
           if (!b) {
             return "";
           }
