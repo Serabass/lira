@@ -1,8 +1,20 @@
 import { Parser } from "../src";
+import { Random, nodeCrypto } from 'random-js';
+
+// class MyEngine implements Engine {
+//   next(): number {
+//     nodeCrypto.next();
+//     return Date.now() % Number.MAX_SAFE_INTEGER;
+//   }
+// }
+
+// let my = new MyEngine();
+
+export const random = new Random(nodeCrypto); //  new Random(nodeCrypto); or uses the nativeMath engine
 
 describe("test", () => {
   it("test 1", async () => {
-    let pa = new Parser(
+    let pa = new Parser(random,
       `
     [
       - Добрый <день|вечер>, я хочу заказать :food, :myFn[1] {
@@ -33,12 +45,12 @@ describe("test", () => {
     expect(res).not.toBeNull();
     expect(typeof res).toBe("string");
     let rgx =
-      /^Добрый (?:день|вечер), я хочу заказать (?:пиццу|суши|пирог|шаверму|бургер с картошкой), 2$/;
-    expect(rgx.test(res.trim())).toBeTruthy();
+      /^Добрый (?:день|вечер), я хочу заказать (?:пиццу|суши|пирог|шаверму|бургер с картошкой ), 2 $/;
+    expect(res).toMatch(rgx);
   });
 
   it("test 2", async () => {
-    let pa = new Parser(
+    let pa = new Parser(random,
       `
     [
       - :myFn[111]
@@ -61,7 +73,7 @@ describe("test", () => {
   });
 
   it("test 3", async () => {
-    let pa = new Parser(
+    let pa = new Parser(random,
       `
     [
       - :myFn[111] :v {
@@ -86,6 +98,6 @@ describe("test", () => {
     expect(res).not.toBeNull();
     expect(typeof res).toBe("string");
     console.log(`"${res}"`);
-    expect(/^112 [123]$/.test(res)).toBeTruthy();
+    expect(/^112 [123] $/.test(res)).toBeTruthy();
   });
 });

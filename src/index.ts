@@ -73,6 +73,7 @@ export class Parser {
         let els = await Promise.all(
           block.elements.map((s: any) => this.parseBlock(s))
         );
+        console.log(els);
         return this.pick(els);
 
       case "Text":
