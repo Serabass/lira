@@ -3,13 +3,9 @@ type DocVariables = { [name: string]: any };
 type DocPredefinedFunctions = { [name: string]: (...args: string[]) => any };
 
 export interface IRandom {
-
   bool(): boolean;
-  
   integer(min: number, max: number): number;
-
   pick<T>(source: T[]): T;
-
   shuffle<T>(source: T[]): T[];
 }
 
@@ -70,11 +66,15 @@ export class Parser {
         ).join("");
 
       case "ArrayBlock":
+        // Было так:
         let els = await Promise.all(
           block.elements.map((s: any) => this.parseBlock(s))
         );
-        console.log(els);
         return this.pick(els);
+
+        // Второй вариант:
+        // let el = this.pick(block.elements);
+        // return this.parseBlock(el);
 
       case "Text":
         return block.value;
