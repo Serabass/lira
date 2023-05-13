@@ -57,7 +57,7 @@ ArrayBlock
   / ArrayBlockMultiline
 
 ArrayBlockNumberRange 'array block number range'
-  = '[[' _ start:ArrayElement _ '..' _ end:ArrayElement _ ']]' {
+  = _ '[[' _ start:ArrayElement _ '..' _ end:ArrayElement _ ']]' _ {
     return {
       type: "ArrayBlock",
       start: start,
@@ -66,7 +66,7 @@ ArrayBlockNumberRange 'array block number range'
   }
 
 ArrayBlockMultiline 'array block'
-  = _ '[' _ elements: ArrayElement* _ ']' {
+  = _ '[' _ elements: ArrayElement* _ ']' _ {
     return {
       type: "ArrayBlock",
       elements: elements
@@ -79,7 +79,7 @@ ArrayBlockMultiline 'array block'
     }
 
 Block 'block'
-  = statements: Statement+ body: BlockBody? _ {
+  = _ statements: Statement+ _ body: BlockBody? _ {
     return {
       type: "Block",
       statements: statements,
