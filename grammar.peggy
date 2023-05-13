@@ -66,7 +66,7 @@ ArrayBlockNumberRange 'array block number range'
   }
 
 ArrayBlockMultiline 'array block'
-  = '[' _ elements: ArrayElement* _ ']' {
+  = _ '[' _ elements: ArrayElement* _ ']' {
     return {
       type: "ArrayBlock",
       elements: elements
@@ -74,7 +74,7 @@ ArrayBlockMultiline 'array block'
   }
 
   ArrayElement
-    = "-" __ element:Block {
+    = _ "-" __ element:Block {
       return element;
     }
 
@@ -205,11 +205,11 @@ Integer
     return parseInt(text(), 10);
   }
 
-_ 'whitespace'
-  = [ \t\r\n]*
+_ = Whitespace*
+__ = Whitespace+
 
-__ 'whitespace required'
-  = [ \t\r\n]+
+Whitespace = [ \t\r\n]+
+    / Comment
 
 NL 'newline'
   = "\r\n"
@@ -218,8 +218,6 @@ NL 'newline'
 
 EOF 'end of file'
   = !.
-
-
 
 //////////////////////////////////////////////////////////
 
