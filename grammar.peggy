@@ -200,13 +200,16 @@ Text 'text'
 Char 'char'
   = [^:\[\]{}\|\r\n<>;#]
 
-Integer
+Integer 'integer'
   = [0-9]+ {
     return parseInt(text(), 10);
   }
 
-_ = Whitespace*
-__ = Whitespace+
+_ 'whitespace'
+  = Whitespace*
+
+__ 'required whitespace'
+  = Whitespace+
 
 Whitespace = [ \t\r\n]+
     / Comment

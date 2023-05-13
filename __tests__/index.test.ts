@@ -124,4 +124,76 @@ describe("test", () => {
     expect(typeof res).toBe("string");
     expect(/^[123]+ 1 $/.test(res)).toBeTruthy();
   });
+
+  it("comment", async () => {
+    let pa = new Parser(random,
+      `
+    [
+      // comment
+      - :v 1 {
+        :v = [
+          - 11
+          - 22
+          - 33
+        ]
+      }
+    ]
+    `,
+      {},
+    );
+
+    let res = await pa.parse();
+    expect(pa).not.toBeNull();
+    expect(res).not.toBeNull();
+    expect(typeof res).toBe("string");
+    expect(/^[123]+ 1 $/.test(res)).toBeTruthy();
+  });
+
+  it("comment", async () => {
+    let pa = new Parser(random,
+      `
+    [
+      - :v 1 {
+        // comment
+        :v = [
+          - 11
+          - 22
+          - 33
+        ]
+      }
+    ]
+    `,
+      {},
+    );
+
+    let res = await pa.parse();
+    expect(pa).not.toBeNull();
+    expect(res).not.toBeNull();
+    expect(typeof res).toBe("string");
+    expect(/^[123]+ 1 $/.test(res)).toBeTruthy();
+  });
+
+  it("comment", async () => {
+    let pa = new Parser(random,
+      `
+    [
+      - :v 1 {
+        :v = [
+          // comment
+          - 11
+          - 22
+          - 33
+        ]
+      }
+    ]
+    `,
+      {},
+    );
+
+    let res = await pa.parse();
+    expect(pa).not.toBeNull();
+    expect(res).not.toBeNull();
+    expect(typeof res).toBe("string");
+    expect(/^[123]+ 1 $/.test(res)).toBeTruthy();
+  });
 });
