@@ -9,14 +9,14 @@ export interface IRandom {
   shuffle<T>(source: T[]): T[];
 }
 
-export class Parser {
-  public static instance(
+export class Parser<V extends DocVariables, F extends DocPredefinedFunctions> {
+  public static instance<V extends DocVariables, F extends DocPredefinedFunctions>(
     random: IRandom,
     input: string,
-    variables: DocVariables,
-    funcs: DocPredefinedFunctions
+    variables: V,
+    funcs: F
   ) {
-    return new Parser(random, input, variables, funcs);
+    return new Parser<V, F>(random, input, variables, funcs);
   }
 
   private document: any;
@@ -25,8 +25,8 @@ export class Parser {
   public constructor(
     public random: IRandom,
     public input: string,
-    public variables: DocVariables = {},
-    public funcs: DocPredefinedFunctions = {}
+    public variables?: V,
+    public funcs?: F
   ) {
     this.parser = require("./grammar.js");
     this.document = this.parser.parse(this.input);
@@ -36,7 +36,7 @@ export class Parser {
     let a = this.random.shuffle(source);
     return this.random.pick(a);
   }
-  
+
   public parse() {
     try {
       return this.parseDocument();
@@ -72,9 +72,9 @@ export class Parser {
         );
         return this.pick(els);
 
-        // Второй вариант:
-        // let el = this.pick(block.elements);
-        // return this.parseBlock(el);
+      // Второй вариант:
+      // let el = this.pick(block.elements);
+      // return this.parseBlock(el);
 
       case "Text":
         return block.value;
