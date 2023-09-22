@@ -1,6 +1,6 @@
 
-type DocVariables = { [name: string]: any };
-type DocPredefinedFunctions = { [name: string]: (...args: string[]) => any };
+export type DocVariables = { [name: string]: any };
+export type DocPredefinedFunctions = { [name: string]: (...args: string[]) => any };
 
 export interface IRandom {
   bool(): boolean;
