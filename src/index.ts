@@ -33,6 +33,10 @@ export class Parser<V extends DocVariables, F extends DocPredefinedFunctions> {
   }
 
   public pick<T>(source: T[]): T {
+    let n = this.random.integer(0, 20);
+    for (let i = 0; i < n; i++) {
+      source = this.random.shuffle(source);
+    }
     let a = this.random.shuffle(source);
     return this.random.pick(a);
   }
