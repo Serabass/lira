@@ -10,14 +10,12 @@ export interface IRandom {
 }
 
 export class Parser<V extends DocVariables, F extends DocPredefinedFunctions> {
-  public static instance<V extends DocVariables, F extends DocPredefinedFunctions>(
+  public static instance = <V extends DocVariables, F extends DocPredefinedFunctions>(
     random: IRandom,
     input: string,
     variables: V,
     funcs: F
-  ) {
-    return new Parser<V, F>(random, input, variables, funcs);
-  }
+  ) => new Parser<V, F>(random, input, variables, funcs);
 
   private document: any;
   private parser: any;
